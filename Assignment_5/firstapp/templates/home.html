@@ -1,0 +1,62 @@
+{% extends "default.html" %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+
+
+{% block content %}
+<div class="row">
+  <div class="large-12 columns">
+    <center><h1>Welcome to our 465 site</h1></center>
+    <!-- <p>{{ submit }}</p> -->
+  </div>
+</div>
+<div class="row">
+  <div class="large-5 columns">
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="row">
+        <div class="large-12 columns">
+          {{ form.errors }}
+          {{ form.suggestion.label }}
+          {{ form.suggestion }}
+          </div>
+      </div>
+      <div class="row">
+        <div class="large-12 columns">
+          <input type="submit" value="Submit" class="button">
+        </div>
+      </div>
+    </form>
+  </div>
+    </div>
+  <div class="large-7 columns">
+    <h2>Song List</h2>
+    <div id="suggest_list">
+      <ul id = "sugg">
+      {% for element in content %}
+      <li>{{ element.suggestion}} - {{ element.artist }}</li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+<script>
+function update() {
+  $("#suggest_list").load("sugg");
+}
+setInterval(update, 3000);
+</script>
+
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<!-- <script src="https://unpkg.com/react@15/dist/react.js"></script>
+<script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script> -->
+{% render_bundle 'main' %}
+{% endblock %}
